@@ -1,10 +1,9 @@
-var dog = {
-    name: "Marley",
-    gender: "Male",
-    age: 2,
-    breed: "Labrador retriever"
+a = 5
+b = 6
+
+function grandTotal(a, b) {
+    return a + b
 };
 
-for (x in dog) {
-    console.log(x + ": " + dog[x])
-}
+var total = grandTotal(a, b);
+console.log(total);
