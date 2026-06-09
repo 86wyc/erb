@@ -2,13 +2,18 @@ ballArray = []
 
 while (ballArray.length < 7) {
     ballSelected = Math.floor(Math.random() * 49 + 1);
-    console.log(ballSelected);
 
     if (ballArray.includes(ballSelected)) {
-        continue
+        continue;
     } else {
+        console.log(ballSelected);
         ballArray.push(ballSelected)
     }
 }
 
-console.log(ballArray.sort((a, b) => a - b));
+specialBall = ballArray.pop()
+normalSixBalls = ballArray.sort((a, b) => a - b)
+
+console.log("\nThis draw's numbers are: ")
+console.log(normalSixBalls + ",[" + specialBall + "]");
+

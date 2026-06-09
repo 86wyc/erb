@@ -1,14 +1,10 @@
-ballArray = []
+var dog = {
+    name: "Marley",
+    gender: "Male",
+    age: 2,
+    breed: "Labrador retriever"
+};
 
-while (ballArray.length < 7) {
-    ballSelected = Math.floor(Math.random() * 49 + 1);
-    console.log(ballSelected);
-
-    if (ballArray.includes(ballSelected)) {
-        continue
-    } else {
-        ballArray.push(ballSelected)
-    }
+for (x in dog) {
+    console.log(x + ": " + dog[x])
 }
-
-console.log(ballArray.sort((a, b) => a - b));
