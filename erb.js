@@ -1,6 +1,3 @@
-function greeting(name, msg) {
-    console.log("Hello " + name + " "+ msg
-        );
-}
+x = 12 * "4";
 
-greeting("Will", "abc");
+console.log(x);
