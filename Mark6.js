@@ -15,5 +15,4 @@ specialBall = ballArray.pop()
 normalSixBalls = ballArray.sort((a, b) => a - b)
 
 console.log(`\nThis draw's numbers are: \n${normalSixBalls}, [${specialBall}]`)
-// console.log(normalSixBalls + ",[" + specialBall + "]");
 
