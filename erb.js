@@ -1,9 +1,6 @@
-a = 5
-b = 6
+function greeting(name, msg) {
+    console.log("Hello " + name + " "+ msg
+        );
+}
 
-function grandTotal(a, b) {
-    return a + b
-};
-
-var total = grandTotal(a, b);
-console.log(total);
+greeting("Will", "abc");
