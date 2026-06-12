@@ -10,7 +10,7 @@ while (launchCount > 0) {
     launchCount--;
 }
 
-console.log(`Blastoff! 🚀`)
+console.log(`Blastoff! 🚀\n`)
 // What this tests: Basic while loop syntax, defining a condition, and manually decrementing a counter variable to avoid an infinite loop.
 
 //-----------------------------------------------------------------------
@@ -32,7 +32,7 @@ while (initialNum < MaxNum) {
     initialNum++;
 }
 
-console.log(`Evens: ${evenArray}\nOdds: ${oddArray}`);
+console.log(`Evens: ${evenArray}\nOdds: ${oddArray}\n`);
 // If the number is even, log "[Number] is EVEN" to the console.
 // If the number is odd, log "[Number] is ODD" to the console.
 // What this tests: Standard for loop structure and integrating conditional if/else statements with the remainder operator (%).
@@ -57,38 +57,22 @@ console.log("Your total is: $" + total);
 //     Task: Imagine a game where a user has to keep guessing a secret number.Write a while loop that simulates this behavior.
 
 // Create a variable secretNumber = 7.
-
+var secretNumber = 7;
 // Create a variable currentGuess.
-
+var currentGuess = 0;
 // Inside the loop, simulate a new guess by generating a random number between 1 and 10 using Math.floor(Math.random() * 10) + 1.
-
-// Log each guess to the console(e.g., "Guessed: 4").
-
-// The loop should stop running the moment currentGuess matches secretNumber.
-const readline = require("readline").createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
-
-let currentGuess = []
-let secretNumber = Math.floor(Math.random() * 10 + 1);
-
-while (true) {
-    readline.question("Guess a number between 1-10: ", (userInput) => {
-        let convertInput = parseInt(userInput);
-        currentGuess.push(convertInput)
-    });
-
-    if (convertInput == secretNumber) {
-        console.log(`You guessed correctly!`);
-        console.log(`Guessed, ${currentGuess}\n`);
-        break;
+while (secretNumber != currentGuess) {
+    currentGuess = Math.floor(Math.random() * 10 + 1);
+    console.log(`You have guessed ${currentGuess}`);
+    if (secretNumber == currentGuess) {
+        console.log(`You have guessed correctly, the number is ${currentGuess}`)
     }
     else {
-        console.log(`Guessed, ${currentGuess}\n`);
-        continue;
+        console.log(`Please try again.\n`);
     }
 }
+// Log each guess to the console(e.g., "Guessed: 4").
+// The loop should stop running the moment currentGuess matches secretNumber.
 // What this tests: Using a while loop for situations where you don't know how many times the loop will need to run beforehand.
 
 //-----------------------------------------------------------------------

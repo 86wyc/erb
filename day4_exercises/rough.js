@@ -1,8 +1,7 @@
-// Exercise 5: Checking if a Property Exists
-// Write a function called hasProperty that takes an object and a key name, and returns true if the key exists in the object, otherwise false.
+// Exercise 6: Iterating Through Object Keys
+// Use a for...in loop to log every key and its corresponding value from the fruit object in the format: key: value.
+const fruit = { name: "Apple", color: "Red", weight: "150g" };
 
-function hasProperty(obj, key) {
-
+for (i in fruit) {
+    console.log(`${i}: ${fruit[i]} `);
 }
-console.log(hasProperty({ name: "Alice" }, "name")); // true
-console.log(hasProperty({ name: "Alice" }, "age"));  // false

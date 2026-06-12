@@ -34,58 +34,81 @@ console.log(account);
 // Exercise 5: Checking if a Property Exists
 // Write a function called hasProperty that takes an object and a key name, and returns true if the key exists in the object, otherwise false.
 
-// function hasProperty(obj, key) {
-//   // Your code here
-// }
-// console.log(hasProperty({ name: "Alice" }, "name")); // true
-// console.log(hasProperty({ name: "Alice" }, "age"));  // false
+function hasProperty(obj, key) {
+    return key in obj;
+}
+console.log(hasProperty({ name: "Alice" }, "name")); // true
+console.log(hasProperty({ name: "Alice" }, "age"));  // false
 
 //---------------------------------------------------------------------------------------------------------------
 // Exercise 6: Iterating Through Object Keys
 // Use a for...in loop to log every key and its corresponding value from the fruit object in the format: key: value.
-// const fruit = { name: "Apple", color: "Red", weight: "150g" };
-// // Your code here
+const fruit = { name: "Apple", color: "Red", weight: "150g" };
+
+for (i in fruit) {
+    console.log(`${i}: ${fruit[i]} `);
+}
 
 //---------------------------------------------------------------------------------------------------------------
 // Exercise 7: Object Methods
 // Create a calculator object that has two numbers as properties (a=5 and b=3) and a method called add() that
 // returns the sum of a and b using the this keyword.
-// const calculator = {
-//  ...
-// };
-// console.log(calculator.add()); // 15
+const calculator = {
+    a: 5,
+    b: 3,
+    add: function () {
+        return this.a + this.b;
+    }
+};
+console.log(calculator.add()); // 15
 
 //---------------------------------------------------------------------------------------------------------------
 // Exercise 8: Counting Properties
 // Write a function countProperties(obj) that returns the total number of properties inside an object. Do not count manually with a loop.
-// function countProperties(obj) {
-//   // Your code here
-// }
-// console.log(countProperties({ a: 1, b: 2, c: 3 })); // 3
+function countProperties(obj) {
+    return Object.keys(obj).length;
+}
+console.log(countProperties({ a: 1, b: 2, c: 3 })); // 3
 
 //---------------------------------------------------------------------------------------------------------------
 // Exercise 9: Summing Values with for...in
 // You are given an object representing a grocery shopping cart with items and their prices.
 // Use a for...in loop to calculate the total cost of all items in the cart.
+// Use a for...in loop to sum the prices
+let total = 0;
 
-// const shoppingCart = {
-//   banana: 1.50,
-//   milk: 3.25,
-//   bread: 2.50,
-//   eggs: 4.00
-// };
-// let total = 0;
-// // Your code here: Use a for...in loop to sum the prices
-// console.log(`Total price: $${total}`); // Should log: Total price: $11.25
+const shoppingCart = {
+    banana: 1.50,
+    milk: 3.25,
+    bread: 2.50,
+    eggs: 4.00
+};
+
+for (i in shoppingCart) {
+    total += shoppingCart[i];
+}
+
+console.log(`Total price: $${total}`); // Should log: Total price: $11.25
 
 //---------------------------------------------------------------------------------------------------------------
 // Exercise 10:
 // Use Function to check if the value is more than 50 and then return the name.
-// const students = {
-//   Alice: 85,
-//   Bob: 45,
-//   Charlie: 92,
-//   David: 65,
-//   Emma: 30
-// };
-// console.log(passedStudents); // Should log: ['Alice', 'Charlie','David']
+const students = {
+    Alice: 85,
+    Bob: 45,
+    Charlie: 92,
+    David: 65,
+    Emma: 30
+};
+
+function passedStudents(students) {
+    let overFifty = [];
+    for (i in students) {
+        if (students[i] > 50) {
+            overFifty.push(i)
+        }
+    }
+    return overFifty;
+}
+
+console.log(passedStudents(students)); // Should log: ['Alice', 'Charlie','David']
