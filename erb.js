@@ -1,3 +1,4 @@
+// init change check
 function getAvg(name, ...assignment) {
     let avgmark = 0;
     for (i in assignment) {
