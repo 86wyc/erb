@@ -1,0 +1,22 @@
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+Procedure:
+Create the new folder (eg erb5_new_express)
+
+Open your folder using VSCode
+
+npm init -y	(remark: only run on the first time)
+
+npx express-generator --view=ejs proj1
+
+cd proj1
+
+npm install
+
+npm audit fix --force
+
+set DEBUG=proj1:*
+
+npm start
+
+open Chrome and access the url:  http://localhost:3000 
