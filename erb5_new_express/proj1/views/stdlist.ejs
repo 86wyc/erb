@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head><title>Student CRUD</title></head>
+<body>
+  <h1>Student List</h1>
+  
+  <fieldset>
+    <legend>Add New Student</legend>
+    <form action="/student/create" method="POST">
+      <input type="text" name="name" placeholder="Name" required>
+      <input type="number" name="age" placeholder="Age" required>
+      <select name="gender">
+        <option value="Male">Male</option>
+        <option value="Female">Female</option>
+      </select>
+      <button type="submit">Add Student</button>
+    </form>
+  </fieldset>
+  <hr>
+  <table border="1" cellpadding="10">
+    <tr>
+      <th>ID</th><th>Name</th><th>Age</th><th>Gender</th><th>Actions</th>
+    </tr>
+    <% students.forEach(student => { %>
+    <tr>
+      <td><%= student.id %></td>
+      <td><%= student.name %></td>
+      <td><%= student.age %></td>
+      <td><%= student.gender %></td>
+      <td>
+        <a href="/student/update/<%= student.id %>">Edit</a> | 
+        <a href="/student/delete/<%= student.id %>" onclick="return confirm('Are you sure?')">Delete</a>
+      </td>
+    </tr>
+    <% }) %>
+  </table>
+</body>
+</html>
