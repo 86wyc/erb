@@ -19,4 +19,4 @@ set DEBUG=proj1:*
 
 npm start
 
-open Chrome and access the url:  http://localhost:3000 
+http://localhost:3000 

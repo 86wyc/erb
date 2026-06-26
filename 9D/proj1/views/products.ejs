@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Management (EJS)</title>
+</head>
+<body>
+    <h1>Product Management</h1>
+
+    <form id="productForm">
+        <input type="text" id="name" placeholder="Product Name" required>
+        <input type="number" id="price" placeholder="Price" required>
+        <button type="submit">Add Product</button>
+    </form>
+
+    <h2>Product Maintenance</h2>
+    <ul id="productList">
+        <% products.forEach(function(p) { %>
+            <li>
+                ID: <%= p.id %> | 
+                Name: <input type="text" id="name-<%= p.id %>" value="<%= p.name %>"> | 
+                Price: <input type="number" id="price-<%= p.id %>" value="<%= p.price %>">
+                <button onclick="updateProduct('<%= p.id %>')">Update</button>
+                <button onclick="deleteProduct('<%= p.id %>')">Delete</button>
+            </li>
+        <% }); %>
+    </ul>
+        <h2>Product List</h2>
+        <% products.forEach(function(p) { %>
+                ID: <%= p.id %>
+                Name: <%= p.name %>
+                Price: <%= p.price %><br>
+        <% }); %>  
+              
+    <script>
+        const form = document.getElementById('productForm');
+
+        // 1. POST - Add a new product
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const price = document.getElementById('price').value;
+
+            await fetch('/products/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, price: Number(price) })
+            });
+
+            window.location.reload(); // Reload page to let EJS render the new data
+        });
+
+        // 2. PUT - Update a specific row
+        async function updateProduct(id) {
+            const updatedName = document.getElementById(`name-${id}`).value;
+            const updatedPrice = document.getElementById(`price-${id}`).value;
+
+            const response = await fetch(`/products/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name: updatedName, price: Number(updatedPrice) })
+            });
+
+            //const data = await response.json();
+            //alert(data.message);
+            //alert('Product updated!');
+            window.location.reload();
+        }
+
+        // 3. DELETE - Remove a specific row
+        async function deleteProduct(id) {
+            if (confirm('Are you sure?')) {
+                await fetch(`/products/${id}`, {
+                    method: 'DELETE'
+                });
+                window.location.reload();
+            }
+        }
+    </script>
+</body>
+</html>

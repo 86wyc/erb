@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple CRUD with EJS</title>
+</head>
+<body>
+    <h1>Simple CRUD Demo with EJS</h1>
+
+    <h2>Add New User (POST)</h2>
+    <form action="/users" method="POST">
+        Name: <input type="text" name="name" required><br><br>
+        Age: <input type="number" name="age"><br><br>
+        Email: <input type="email" name="email"><br><br>
+        <button type="submit">Add User</button>
+    </form>
+    <hr>
+    <h2>Current Users</h2>
+    <a href="/">Refresh</a><br><br>
+    <% users.forEach(user => { %>
+        <div>
+            <strong>ID: <%= user.id %> | <%= user.name %></strong> 
+            (Age: <%= user.age %>, Email: <%= user.email %>)
+
+            <!-- Update Form -->
+            <form action="/users/update" method="POST" style="display: inline;">
+                <input type="hidden" name="id" value="<%= user.id %>">
+                Name: <input type="text" name="name" value="<%= user.name %>" required>
+                Age: <input type="number" name="age" value="<%= user.age %>">
+                Email: <input type="email" name="email" value="<%= user.email %>">
+                <button type="submit">Update</button>
+            </form>
+
+            <!-- Delete Form -->
+            <form action="/users/delete" method="POST" style="display: inline;" 
+                  onsubmit="return confirm('Delete this user?')">
+                <input type="hidden" name="id" value="<%= user.id %>">
+                <button type="submit">Delete</button>
+            </form>
+        </div>
+        <br>
+    <% }); %>
+
+    <p><strong>Note:</strong> Data is stored only in server memory.</p>
+</body>
+</html>
