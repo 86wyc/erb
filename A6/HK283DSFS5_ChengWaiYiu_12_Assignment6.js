@@ -4,18 +4,27 @@ for (let i = 1; i <= 49; i++) {
     pool.push(i);
 }
 
+console.log("Full Pool: ");
 console.log(pool);
+console.log("Mark Six result: ");
 
 
 let index = 0;
-let i = o;
-let iterval;
-console.log("Mark Six result: ");
+let i = 0;
+let interval;
+
+
+
 interval = setInterval(() => {
-    const randomIndex = Math.floor(Math.random() * pool.length);
-    const drawnNumber = pool.splice(randomIndex, 1)[0];
-    console.log(`Draw number ${i + 1}: ${drawnNumber}`);
+    index = Math.floor(Math.random() * pool.length);
+    const drawnNumber = pool.splice(index, 1)[0];
+
     i++;
+    if (pool.length <= 42) { console.log(`Special number: \n${drawnNumber}`); }
+    else {
+        console.log(`${drawnNumber}`);
+    }
+
 
     //Don't forget the exit condition for setInterval loop
     if (i >= 7) {
@@ -24,7 +33,7 @@ interval = setInterval(() => {
 }, 1000);
 
 setTimeout(() => {
-    // console.log("The remaining pool: ")
+    console.log(`The remaining pool: `);
     console.log(pool);
 
 }, 7500); //Delay 7.5 seconds to ensure game is done
