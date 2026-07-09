@@ -1,0 +1,100 @@
+
+***************************************************
+Setup how to create and login by administator
+***************************************************
+
+use admin
+
+db.createUser({
+user: "AdminUser",
+pwd: "123456",
+roles: [ { role: "userAdminAnyDatabase",
+db:"admin"},"readWriteAnyDatabase"]})
+
+Open command prompt as Adminstrator
+
+notepad "C:\Program Files\MongoDB\Server\8.0\bin\mongod.cfg"
+
+		amend from:
+		#secruity
+
+		to:
+		security:
+		  authorization: enabled
+  
+restart the mongodb service thru taskmgr  
+  
+----------------------------------
+use admin
+show users
+db.getUsers()
+
+----------------------------------
+use test
+
+db.createUser({
+user: "Andy",
+pwd: "andy",
+roles: [{ role: "readWrite", db: "test"}]})
+
+use school
+db.list.insertOne({name:"peter"})
+
+
+db.createUser({
+user: "Ben",
+pwd: "ben",
+roles: [{role: "read", db: "test"}]})
+
+db.createUser({
+user: "Chris",
+pwd: "chris",
+roles: []})
+
+
+db.auth("Andy","andy")	//usage: use "Andy" to log into system 
+use test
+db.list.insertOne({"name":peter}) //ok
+
+use school
+db.list.insertOne({"name":peter}) //should be display error
+
+
+use test
+db.auth("Ben","123456")
+db.list.find()//ok
+db.list.insertOne({"name":peter}) //should be display error due to "Ben" only allow read
+
+
+db.auth("Chris","123456")
+db.list.find()  //should be display error due to "Chris" nothing allow to do
+db.list.insertOne({"name":peter}) 
+
+
+****************************************
+1. usage: show all user list
+db.getUsers() 
+
+2. usage: drop user 
+db.dropUser("USERNAME")
+
+3. usage: prompt to input the password
+db.createUser({
+user: "Andy",
+pwd: passwordPrompt(),
+roles: [{ role: "readWrite", db: "test"}]})
+
+Remark: use admin->db.auth("AdminUser","123456")
+
+
+usage : check the current logged user:
+db.runCommand({ connectionStatus: 1 })
+
+****************************************
+
+
+
+
+
+
+  
