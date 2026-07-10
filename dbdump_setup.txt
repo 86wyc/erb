@@ -1,0 +1,59 @@
+*************************************************************
+Backup the database/collection from default port 27017
+*************************************************************
+\\backup all database from default 27017 
+d:\mongo_backup\bin\mongodump --out d:\User\user\dbdump1
+
+\\backup specific database from default 27017 
+d:\mongo_backup\bin\mongodump --db testdb --out d:\User\user\dbdump2 
+
+\\backup specific collection from default 27017 
+d:\mongo_backup\bin\mongodump --db staff --collection Contact --out d:\User\user\dbdump3
+
+
+
+
+*************************************************************
+Backup the database/collection from server port 28500
+*************************************************************
+\\start the server port 28500
+"C:\Program Files\MongoDB\Server\8.0\bin\mongod" --port 28500 --dbpath "d:\User\user\data1"
+
+d:\mongosh\bin\mongosh --port 28500
+use year1
+db.quar1.insertOne({"sale":1})
+db.quar2.insertOne({"sale":2})
+db.quar3.insertOne({"sale":3})
+db.quar4.insertOne({"sale":4})
+use year2
+db.quar1.insert({"sale":5})
+
+
+d:\mongo_backup\bin\mongodump --host localhost --port 28500 --out d:\User\user\year1 --db year1
+
+d:\mongo_backup\bin\mongodump --port 28500 --out d:\User\user\year2 --db year2 --collection quar1
+
+d:\mongo_backup\bin\mongodump --port 28500 --out d:\User\user\year1_ex --db year1 --excludeCollection quar1
+
+
+\\backup all database from server port 28500 using schedular.bat
+d:\mongo_backup\bin\mongodump --port 28500 --out d:\User\user\backuptemp
+robocopy /s d:\User\user\backuptemp d:\User\user\%date:~0,2%-%date:~3,2%-%date:~6,4% /MOVE
+PAUSE
+
+
+
+*************************************************************
+Restore the database/collection from server port 28500
+*************************************************************
+"C:\Program Files\MongoDB\Server\8.0\bin\mongod" --port 28500 --dbpath "d:\User\user\data1"
+d:\mongosh\bin\mongosh --port 28500
+show dbs
+use year1
+db.dropDatabase()
+use year2
+db.dropDatabase()
+d:\mongo_backup\bin\mongorestore --port 28500 d:\User\user\10-07-2026
+
+
+
