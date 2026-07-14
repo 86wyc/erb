@@ -1,0 +1,102 @@
+mkdir D:\User\user\config\data1
+mkdir D:\User\user\config\data2
+mkdir D:\User\user\config\data3
+
+mkdir D:\User\user\shards1\data1
+mkdir D:\User\user\shards1\data2
+mkdir D:\User\user\shards1\data3
+
+mkdir D:\User\user\shards2\data1
+mkdir D:\User\user\shards2\data2
+mkdir D:\User\user\shards2\data3
+
+//create sharding server
+"C:\Program Files\MongoDB\Server\8.0\bin\mongod" --port 28010 --configsvr --replSet cfs --dbpath "D:\User\user\config\data1"
+"C:\Program Files\MongoDB\Server\8.0\bin\mongod" --port 28011 --configsvr --replSet cfs --dbpath "D:\User\user\config\data2"
+"C:\Program Files\MongoDB\Server\8.0\bin\mongod" --port 28012 --configsvr --replSet cfs --dbpath "D:\User\user\config\data3"
+
+
+d:\mongosh\bin\mongosh --port 28010
+
+rs.initiate({
+_id:'cfs',
+configsvr: true,
+members:[{_id:0,host:'localhost:28010'},
+{_id:1,host:'localhost:28011'},
+{_id:2,host:'localhost:28012'}]})
+
+
+
+//shard1
+"C:\Program Files\MongoDB\Server\8.0\bin\mongod" --port 28020 --replSet rs1 --shardsvr --dbpath "D:\User\user\shards1\data1"
+"C:\Program Files\MongoDB\Server\8.0\bin\mongod" --port 28021 --replSet rs1 --shardsvr --dbpath "D:\User\user\shards1\data2"
+"C:\Program Files\MongoDB\Server\8.0\bin\mongod" --port 28022 --replSet rs1 --shardsvr --dbpath "D:\User\user\shards1\data3"
+
+d:\mongosh\bin\mongosh --port 28020
+
+rs.initiate({
+_id:'rs1',
+members:[{_id:0,host:'localhost:28020'},
+{_id:1,host:'localhost:28021'},
+{_id:2,host:'localhost:28022'}]})
+
+
+
+//shard2
+"C:\Program Files\MongoDB\Server\8.0\bin\mongod" --port 28030 --replSet rs2 --shardsvr --dbpath "D:\User\user\shards2\data1"
+"C:\Program Files\MongoDB\Server\8.0\bin\mongod" --port 28031 --replSet rs2 --shardsvr --dbpath "D:\User\user\shards2\data2"
+"C:\Program Files\MongoDB\Server\8.0\bin\mongod" --port 28032 --replSet rs2 --shardsvr --dbpath "D:\User\user\shards2\data3"
+
+d:\mongosh\bin\mongosh --port 28030
+
+rs.initiate({
+_id:'rs2',
+members:[{_id:0,host:'localhost:28030'},
+{_id:1,host:'localhost:28031'},
+{_id:2,host:'localhost:28032'}]})
+
+
+//router
+"C:\Program Files\MongoDB\Server\8.0\bin\mongos" --configdb cfs/localhost:28010 --port 28000
+
+
+
+d:\mongosh\bin\mongosh --port 28000
+
+sh.addShard("rs1/localhost:28020,localhost:28021,localhost:28022")
+sh.addShard("rs2/localhost:28030,localhost:28031,localhost:28032")
+
+sh.status()
+//Hashed
+
+sh.enableSharding("test")
+
+db.createCollection("col")
+
+sh.shardCollection("test.col",{x:'hashed'}) //Ranged -sh.shardCollection("test.col",{x:1}}
+
+
+for (var i = 1; i <= 10; i++) {
+db.col.insertOne({ x : i })}
+
+db.col.getShardDistribution()
+
+
+db.col.find()
+
+sh.status()
+//ranged,
+sh.enableSharding("userdb")
+
+db.createCollection("profile")
+
+sh.shardCollection("userdb.profile",{x:1}) //Ranged -sh.shardCollection("test.col",{x:1}}
+
+
+for (var i = 1; i <= 10; i++) {
+db.col.insertOne({ x : i })}
+
+db.col.getShardDistribution()
+
+
+db.col.find()
